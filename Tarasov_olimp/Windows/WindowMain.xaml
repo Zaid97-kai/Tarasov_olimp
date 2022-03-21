@@ -11,9 +11,11 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="2">
+        <UniformGrid Columns="4">
             <ComboBox x:Name="CbAtr" SelectionChanged="CbAtr_SelectionChanged"></ComboBox>
             <TextBox x:Name="TbValueAtr" TextChanged="TbValueAtr_TextChanged"></TextBox>
+            <Button x:Name="BnAdd" Click="BnAdd_Click">Add</Button>
+            <Button x:Name="BnRemove" Click="BnRemove_Click">Remove</Button>
         </UniformGrid>
         <DataGrid Grid.Row="1" x:Name="dgWorker" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="Tarasov_olimp.Windows.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tarasov_olimp.Windows"
+        mc:Ignorable="d"
+        Title="AddWindow" Height="400" Width="400">
+    <Grid>
+        <UniformGrid Rows="8" Columns="2">
+            <TextBlock> Окно добавления</TextBlock>
+            <Button x:Name="BnBack" Click="BnBack_Click">Back</Button>
+            <TextBlock>F</TextBlock>
+            <TextBox x:Name="TbF"></TextBox>
+            <TextBlock>N</TextBlock>
+            <TextBox x:Name="TbN"></TextBox>
+            <TextBlock>O</TextBlock>
+            <TextBox x:Name="TbO"></TextBox>
+            <TextBlock>D</TextBlock>
+            <TextBox x:Name="TbD"></TextBox>
+            <TextBlock>Start</TextBlock>
+            <DatePicker Name="DpStart"></DatePicker>
+            <TextBlock>End</TextBlock>
+            <DatePicker Name="DpEnd"></DatePicker>
+            <Button Margin="0,0,-200,0" Name="BnSave" Click="BnSave_Click">Save</Button>
+        </UniformGrid>
+    </Grid>
+</Window>

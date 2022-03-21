@@ -52,5 +52,29 @@ namespace Tarasov_olimp.Windows
                 TbValueAtr.IsReadOnly = false;
             }
         }
+
+        private void BnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow addWindow = new AddWindow(this);
+            
+            this.Hide();
+            addWindow.ShowDialog();
+        }
+
+        private void BnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgWorker.SelectedItems.Count == 1)
+            {
+                _db.GetContext().Worker.Remove(dgWorker.SelectedItem as Worker);
+                _db.GetContext().SaveChanges();
+            }
+            else if(dgWorker.SelectedItems.Count > 1)
+            {
+                _db.GetContext().Worker.RemoveRange(dgWorker.SelectedItems.Cast<Worker>());
+                _db.GetContext().SaveChanges();
+            }
+
+            dgWorker.ItemsSource = _db.GetContext().Worker.ToList();
+        }
     }
 }
