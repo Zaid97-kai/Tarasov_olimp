@@ -1,0 +1,569 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище RepairDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dop_chast">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="date_input" Type="date" Nullable="false" />
+          <Property Name="id_into_repair" Type="int" />
+        </EntityType>
+        <EntityType Name="Fillial">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Histori_remove">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="From" Type="int" Nullable="false" />
+          <Property Name="To" Type="int" Nullable="false" />
+          <Property Name="Time_Date" Type="date" Nullable="false" />
+          <Property Name="id_machine" Type="int" />
+        </EntityType>
+        <EntityType Name="into_repair">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_into" Type="date" Nullable="false" />
+          <Property Name="id_kind_repair" Type="int" />
+          <Property Name="id_worker_input" Type="int" />
+          <Property Name="id_worker_output" Type="int" />
+        </EntityType>
+        <EntityType Name="kind_repair">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="invent_number" />
+          </Key>
+          <Property Name="invent_number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="god_vipuska" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="lovgin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="date_reg" Type="date" Nullable="false" />
+          <Property Name="date_last_autor" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dolgnost" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date_begin" Type="date" Nullable="false" />
+          <Property Name="Date_end" Type="date" Nullable="false" />
+          <Property Name="id_fillial" Type="int" />
+        </EntityType>
+        <Association Name="FK_dop_chast_into_repair">
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="0..1" />
+          <End Role="dop_chast" Type="Self.dop_chast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="into_repair">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dop_chast">
+              <PropertyRef Name="id_into_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Fillial">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="From" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Fillial1">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="To" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Machine">
+          <End Role="Machine" Type="Self.Machine" Multiplicity="0..1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Machine">
+              <PropertyRef Name="invent_number" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="id_machine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_kind_repair">
+          <End Role="kind_repair" Type="Self.kind_repair" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kind_repair">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_kind_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_worker_input" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_Worker1">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_worker_output" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Fillial">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="0..1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="id_fillial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище RepairDBModelContainer">
+          <EntitySet Name="dop_chast" EntityType="Self.dop_chast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fillial" EntityType="Self.Fillial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Histori_remove" EntityType="Self.Histori_remove" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="into_repair" EntityType="Self.into_repair" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kind_repair" EntityType="Self.kind_repair" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Machine" EntityType="Self.Machine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dop_chast_into_repair" Association="Self.FK_dop_chast_into_repair">
+            <End Role="into_repair" EntitySet="into_repair" />
+            <End Role="dop_chast" EntitySet="dop_chast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Fillial" Association="Self.FK_Histori_remove_Fillial">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Fillial1" Association="Self.FK_Histori_remove_Fillial1">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Machine" Association="Self.FK_Histori_remove_Machine">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_kind_repair" Association="Self.FK_into_repair_kind_repair">
+            <End Role="kind_repair" EntitySet="kind_repair" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_Worker" Association="Self.FK_into_repair_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_Worker1" Association="Self.FK_into_repair_Worker1">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Fillial" Association="Self.FK_Worker_Fillial">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RepairDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dop_chast">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="date_input" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_into_repair" Type="Int32" />
+          <NavigationProperty Name="into_repair" Relationship="Self.FK_dop_chast_into_repair" FromRole="dop_chast" ToRole="into_repair" />
+        </EntityType>
+        <EntityType Name="Fillial">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Histori_remove" Relationship="Self.FK_Histori_remove_Fillial" FromRole="Fillial" ToRole="Histori_remove" />
+          <NavigationProperty Name="Histori_remove1" Relationship="Self.FK_Histori_remove_Fillial1" FromRole="Fillial" ToRole="Histori_remove" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK_Worker_Fillial" FromRole="Fillial" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="Histori_remove">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="From" Type="Int32" Nullable="false" />
+          <Property Name="To" Type="Int32" Nullable="false" />
+          <Property Name="Time_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_machine" Type="Int32" />
+          <NavigationProperty Name="Fillial" Relationship="Self.FK_Histori_remove_Fillial" FromRole="Histori_remove" ToRole="Fillial" />
+          <NavigationProperty Name="Fillial1" Relationship="Self.FK_Histori_remove_Fillial1" FromRole="Histori_remove" ToRole="Fillial" />
+          <NavigationProperty Name="Machine" Relationship="Self.FK_Histori_remove_Machine" FromRole="Histori_remove" ToRole="Machine" />
+        </EntityType>
+        <EntityType Name="into_repair">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="date_into" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_kind_repair" Type="Int32" />
+          <Property Name="id_worker_input" Type="Int32" />
+          <Property Name="id_worker_output" Type="Int32" />
+          <NavigationProperty Name="dop_chast" Relationship="Self.FK_dop_chast_into_repair" FromRole="into_repair" ToRole="dop_chast" />
+          <NavigationProperty Name="kind_repair" Relationship="Self.FK_into_repair_kind_repair" FromRole="into_repair" ToRole="kind_repair" />
+          <NavigationProperty Name="Worker" Relationship="Self.FK_into_repair_Worker" FromRole="into_repair" ToRole="Worker" />
+          <NavigationProperty Name="Worker1" Relationship="Self.FK_into_repair_Worker1" FromRole="into_repair" ToRole="Worker" />
+        </EntityType>
+        <EntityType Name="kind_repair">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="into_repair" Relationship="Self.FK_into_repair_kind_repair" FromRole="kind_repair" ToRole="into_repair" />
+        </EntityType>
+        <EntityType Name="Machine">
+          <Key>
+            <PropertyRef Name="invent_number" />
+          </Key>
+          <Property Name="invent_number" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="god_vipuska" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Histori_remove" Relationship="Self.FK_Histori_remove_Machine" FromRole="Machine" ToRole="Histori_remove" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Fname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dolgnost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_end" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_fillial" Type="Int32" />
+          <NavigationProperty Name="Fillial" Relationship="Self.FK_Worker_Fillial" FromRole="Worker" ToRole="Fillial" />
+          <NavigationProperty Name="into_repair" Relationship="Self.FK_into_repair_Worker" FromRole="Worker" ToRole="into_repair" />
+          <NavigationProperty Name="into_repair1" Relationship="Self.FK_into_repair_Worker1" FromRole="Worker" ToRole="into_repair" />
+        </EntityType>
+        <Association Name="FK_dop_chast_into_repair">
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="0..1" />
+          <End Role="dop_chast" Type="Self.dop_chast" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="into_repair">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="dop_chast">
+              <PropertyRef Name="id_into_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Fillial">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="From" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Fillial1">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="To" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Worker_Fillial">
+          <End Role="Fillial" Type="Self.Fillial" Multiplicity="0..1" />
+          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fillial">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Worker">
+              <PropertyRef Name="id_fillial" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histori_remove_Machine">
+          <End Role="Machine" Type="Self.Machine" Multiplicity="0..1" />
+          <End Role="Histori_remove" Type="Self.Histori_remove" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Machine">
+              <PropertyRef Name="invent_number" />
+            </Principal>
+            <Dependent Role="Histori_remove">
+              <PropertyRef Name="id_machine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_kind_repair">
+          <End Role="kind_repair" Type="Self.kind_repair" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kind_repair">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_kind_repair" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_Worker">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_worker_input" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_into_repair_Worker1">
+          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
+          <End Role="into_repair" Type="Self.into_repair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Worker">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="into_repair">
+              <PropertyRef Name="id_worker_output" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RepairDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dop_chast" EntityType="Self.dop_chast" />
+          <EntitySet Name="Fillial" EntityType="Self.Fillial" />
+          <EntitySet Name="Histori_remove" EntityType="Self.Histori_remove" />
+          <EntitySet Name="into_repair" EntityType="Self.into_repair" />
+          <EntitySet Name="kind_repair" EntityType="Self.kind_repair" />
+          <EntitySet Name="Machine" EntityType="Self.Machine" />
+          <EntitySet Name="Worker" EntityType="Self.Worker" />
+          <AssociationSet Name="FK_dop_chast_into_repair" Association="Self.FK_dop_chast_into_repair">
+            <End Role="into_repair" EntitySet="into_repair" />
+            <End Role="dop_chast" EntitySet="dop_chast" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Fillial" Association="Self.FK_Histori_remove_Fillial">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Fillial1" Association="Self.FK_Histori_remove_Fillial1">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Worker_Fillial" Association="Self.FK_Worker_Fillial">
+            <End Role="Fillial" EntitySet="Fillial" />
+            <End Role="Worker" EntitySet="Worker" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histori_remove_Machine" Association="Self.FK_Histori_remove_Machine">
+            <End Role="Machine" EntitySet="Machine" />
+            <End Role="Histori_remove" EntitySet="Histori_remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_kind_repair" Association="Self.FK_into_repair_kind_repair">
+            <End Role="kind_repair" EntitySet="kind_repair" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_Worker" Association="Self.FK_into_repair_Worker">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <AssociationSet Name="FK_into_repair_Worker1" Association="Self.FK_into_repair_Worker1">
+            <End Role="Worker" EntitySet="Worker" />
+            <End Role="into_repair" EntitySet="into_repair" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="RepairDBModel.Users" />
+        </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="lovgin" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date_reg" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_last_autor" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RepairDBModelContainer" CdmEntityContainer="RepairDBEntities">
+          <EntitySetMapping Name="dop_chast">
+            <EntityTypeMapping TypeName="RepairDBModel.dop_chast">
+              <MappingFragment StoreEntitySet="dop_chast">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="date_input" ColumnName="date_input" />
+                <ScalarProperty Name="id_into_repair" ColumnName="id_into_repair" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fillial">
+            <EntityTypeMapping TypeName="RepairDBModel.Fillial">
+              <MappingFragment StoreEntitySet="Fillial">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Histori_remove">
+            <EntityTypeMapping TypeName="RepairDBModel.Histori_remove">
+              <MappingFragment StoreEntitySet="Histori_remove">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="Time_Date" ColumnName="Time_Date" />
+                <ScalarProperty Name="id_machine" ColumnName="id_machine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="into_repair">
+            <EntityTypeMapping TypeName="RepairDBModel.into_repair">
+              <MappingFragment StoreEntitySet="into_repair">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="date_into" ColumnName="date_into" />
+                <ScalarProperty Name="id_kind_repair" ColumnName="id_kind_repair" />
+                <ScalarProperty Name="id_worker_input" ColumnName="id_worker_input" />
+                <ScalarProperty Name="id_worker_output" ColumnName="id_worker_output" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kind_repair">
+            <EntityTypeMapping TypeName="RepairDBModel.kind_repair">
+              <MappingFragment StoreEntitySet="kind_repair">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Machine">
+            <EntityTypeMapping TypeName="RepairDBModel.Machine">
+              <MappingFragment StoreEntitySet="Machine">
+                <ScalarProperty Name="invent_number" ColumnName="invent_number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="god_vipuska" ColumnName="god_vipuska" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Worker">
+            <EntityTypeMapping TypeName="RepairDBModel.Worker">
+              <MappingFragment StoreEntitySet="Worker">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="Sname" ColumnName="Sname" />
+                <ScalarProperty Name="Lname" ColumnName="Lname" />
+                <ScalarProperty Name="Dolgnost" ColumnName="Dolgnost" />
+                <ScalarProperty Name="Date_begin" ColumnName="Date_begin" />
+                <ScalarProperty Name="Date_end" ColumnName="Date_end" />
+                <ScalarProperty Name="id_fillial" ColumnName="id_fillial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="RepairDBModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="date_last_autor" ColumnName="date_last_autor" />
+                <ScalarProperty Name="date_reg" ColumnName="date_reg" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="lovgin" ColumnName="lovgin" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

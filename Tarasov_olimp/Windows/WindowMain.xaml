@@ -1,0 +1,26 @@
+﻿<Window x:Class="Tarasov_olimp.Windows.WindowMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tarasov_olimp.Windows"
+        mc:Ignorable="d"
+        Title="WindowMain" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="7*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="2">
+            <ComboBox x:Name="CbAtr" SelectionChanged="CbAtr_SelectionChanged"></ComboBox>
+            <TextBox x:Name="TbValueAtr" TextChanged="TbValueAtr_TextChanged"></TextBox>
+        </UniformGrid>
+        <DataGrid Grid.Row="1" x:Name="dgWorker" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding id}"/>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
+                <DataGridTextColumn Header="Должность" Binding="{Binding Dolgnost}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
