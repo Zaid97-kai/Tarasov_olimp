@@ -22,6 +22,12 @@ namespace Tarasov_olimp.Windows
         private WindowMain _windowMain;
         private bool _flag = false;
         private Worker _worker;
+        /// <summary>
+        /// Конструктор окна
+        /// </summary>
+        /// <param name="windowMain"></param>
+        /// <param name="flag"></param>
+        /// <param name="button"></param>
         public AddWindow(WindowMain windowMain, bool flag, object button = null)
         {
             InitializeComponent();
