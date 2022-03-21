@@ -22,6 +22,9 @@ namespace Tarasov_olimp.Windows
     {
         private string _name;
         private List<Worker> _temp = _db.GetContext().Worker.ToList();
+        private DateTime _start;
+        private DateTime _end;
+        List<Worker> _tempList = new List<Worker>();
         public WindowMain()
         {
             InitializeComponent();
@@ -55,7 +58,7 @@ namespace Tarasov_olimp.Windows
 
         private void BnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddWindow addWindow = new AddWindow(this);
+            AddWindow addWindow = new AddWindow(this, true);
             
             this.Hide();
             addWindow.ShowDialog();
@@ -75,6 +78,46 @@ namespace Tarasov_olimp.Windows
             }
 
             dgWorker.ItemsSource = _db.GetContext().Worker.ToList();
+        }
+
+        private void BnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow addWindow = new AddWindow(this, false, sender);
+            addWindow.ShowDialog();
+        }
+
+        private void DpStart_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            _start = DpStart.SelectedDate.Value;
+            if(_end != DateTime.MinValue && _start != DateTime.MinValue)
+            {
+                Update();
+            }
+        }
+
+        private void DpEnd_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            _end = DpEnd.SelectedDate.Value;
+            if (_end != DateTime.MinValue && _start != DateTime.MinValue)
+            {
+                Update();
+            }
+        }
+
+        private void Update()
+        {
+            if (_tempList != null)
+            {
+                _tempList.Clear();
+            }
+            foreach (var worker in _db.GetContext().Worker.ToList())
+            {
+                if (worker.Date_begin <= DpStart.SelectedDate.Value && worker.Date_end >= DpEnd.SelectedDate.Value)
+                {
+                    _tempList.Add(worker);
+                }
+            }
+            dgWorker.ItemsSource = _tempList;
         }
     }
 }

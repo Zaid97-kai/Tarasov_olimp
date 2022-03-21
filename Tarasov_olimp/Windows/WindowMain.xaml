@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="7*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <UniformGrid Columns="4">
             <ComboBox x:Name="CbAtr" SelectionChanged="CbAtr_SelectionChanged"></ComboBox>
@@ -22,7 +23,18 @@
                 <DataGridTextColumn Header="№" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
                 <DataGridTextColumn Header="Должность" Binding="{Binding Dolgnost}"/>
+                <DataGridTemplateColumn Header="Изменить">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="BnEdit" Click="BnEdit_Click">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <UniformGrid Grid.Row="2" Columns="2">
+            <DatePicker Name="DpStart" CalendarClosed="DpStart_CalendarClosed"></DatePicker>
+            <DatePicker Name="DpEnd" CalendarClosed="DpEnd_CalendarClosed"></DatePicker>
+        </UniformGrid>
     </Grid>
 </Window>
